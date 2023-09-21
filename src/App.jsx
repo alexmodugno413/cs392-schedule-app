@@ -3,6 +3,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import Banner from "./components/Banner";
 import CourseList from "./components/CourseList";
+import Card from "react-bootstrap/Card";
+import "bootstrap/dist/css/bootstrap.css";
 
 const schedule = {
   title: "CS Courses for 2018-2019",
