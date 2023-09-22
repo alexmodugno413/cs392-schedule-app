@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CourseList from "./CourseList";
+import "./TermPage.css";
 
 const terms = ["Fall", "Winter", "Spring"];
 
@@ -47,6 +48,9 @@ const TermPage = ({ courseData }) => {
       <br />
       <TermSelector selection={selection} setSelection={setSelection} />
       <br /> <br />
+      <div className="instructions">
+        Click on a card to select or unselect the class <br /> <br />
+      </div>
       <CourseList courses={courseData} term={selection} />
     </div>
   );
