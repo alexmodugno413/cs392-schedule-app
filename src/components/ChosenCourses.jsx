@@ -1,7 +1,6 @@
-const ChosenCourses = ({ selectedClasses, allClasses }) => {
-  console.log("selectedClasses", selectedClasses);
-  console.log("allClasses", allClasses);
+import "./ChosenCourses.css";
 
+const ChosenCourses = ({ selectedClasses, allClasses }) => {
   const findCourse = (courseTitle) => {
     const course = Object.entries(allClasses).filter(
       ([id, info]) => `${info.term} CS ${info.number}` === courseTitle
@@ -10,11 +9,6 @@ const ChosenCourses = ({ selectedClasses, allClasses }) => {
   };
 
   const formattedSelectedClasses = selectedClasses.map(findCourse);
-  console.log("formattedSelectedClasses", formattedSelectedClasses);
-
-  formattedSelectedClasses.map((id) => {
-    console.log("info new", id[0][1]);
-  });
 
   let formattedClasses = [];
   formattedSelectedClasses.map((id) => {
@@ -23,17 +17,27 @@ const ChosenCourses = ({ selectedClasses, allClasses }) => {
   console.log("formattedClasses", formattedClasses);
 
   return (
-    <div className="cart">
+    <div>
       {selectedClasses.length === 0 ? (
-        <h2>Click on a card to select a class</h2>
+        <div>
+          <h2>No courses selected</h2>
+          <h3>Click on a card to select a class</h3>
+        </div>
       ) : (
         <div>
-          Selected classes:
-          {formattedClasses.map((course) => (
-            <div>
-              {course.term} CS {course.number}: {course.title}
-            </div>
-          ))}
+          <h2>Selected classes:</h2>
+          <div>
+            {formattedClasses.map((course, index) => (
+              <div key={index} className={`class-info class-${index + 1}`}>
+                <div className="class-term">{course.term}</div>
+                <div className="class-details">
+                  <span className="class-number">CS {course.number}:</span>
+                  <span className="class-title">{course.title}</span>
+                  <span className="class-meets">{course.meets}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

@@ -1,0 +1,28 @@
+.modal {
+    padding: 20px;
+  }
+  
+.class-info {
+border: 1px solid #ccc;
+padding: 10px;
+margin-bottom: 10px;
+background-color: #f9f9f9;
+}
+
+.class-term {
+font-weight: bold;
+margin-bottom: 5px;
+}
+
+.class-number {
+font-weight: bold;
+}
+
+.class-title {
+margin-left: 5px;
+}
+
+.class-meets {
+display: block;
+margin-top: 5px;
+}
