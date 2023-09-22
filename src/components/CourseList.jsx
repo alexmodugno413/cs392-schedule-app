@@ -3,9 +3,7 @@ import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.css";
 import "./CourseList.css";
 
-const CourseList = ({ courses, term }) => {
-  const [selectedClasses, setSelectedClasses] = useState([]);
-
+const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
   const selectClass = (classTitle) => {
     selectedClasses.includes(classTitle)
       ? setSelectedClasses(selectedClasses.filter((x) => x != classTitle))
