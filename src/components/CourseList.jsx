@@ -5,9 +5,24 @@ import "./CourseList.css";
 
 const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
   const selectClass = (classTitle) => {
-    selectedClasses.includes(classTitle)
-      ? setSelectedClasses(selectedClasses.filter((x) => x != classTitle))
-      : setSelectedClasses([...selectedClasses, classTitle]);
+    // LOGIC FOR CATCHING TIME CONFLICTS, ADD FUNCTION FOR DAY AND TIME OVERLAP
+    console.log("classTitle", classTitle);
+
+    var isPresent = selectedClasses.some((selectedClass) => {
+      return JSON.stringify(selectedClass) === JSON.stringify(classTitle);
+    });
+    // if class not already selected, select
+    if (!isPresent) {
+      // logic for time conflicts
+      setSelectedClasses([...selectedClasses, classTitle]);
+    } else {
+      setSelectedClasses(
+        selectedClasses.filter((selectedClass) => {
+          return JSON.stringify(selectedClass) !== JSON.stringify(classTitle);
+        })
+      );
+    }
+    console.log("selectedClasses", selectedClasses);
   };
   const newCourses = Object.entries(courses).filter(
     ([id, info]) => info.term === term
@@ -16,14 +31,36 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
     <div className="course-list">
       {Object.entries(newCourses).map(([id, info]) => (
         <div
-          onClick={() => selectClass(`${info[1].term} CS ${info[1].number}`)}
-          key={`${info.term} CS ${info.number}`}
+          onClick={() =>
+            selectClass([
+              `${info[1].term}`,
+              `${info[1].title}`,
+              `${info[1].number}`,
+              `${info[1].meets}`,
+            ])
+          }
+          key={[
+            `${info[1].term}`,
+            `${info[1].title}`,
+            `${info[1].number}`,
+            `${info[1].meets}`,
+          ]}
         >
           <Card
             className="left-aligned-card"
             style={{ width: "12.5rem" }}
             bg={
-              selectedClasses.includes(`${info[1].term} CS ${info[1].number}`)
+              selectedClasses.some((selectedClass) => {
+                return (
+                  JSON.stringify(selectedClass) ===
+                  JSON.stringify([
+                    `${info[1].term}`,
+                    `${info[1].title}`,
+                    `${info[1].number}`,
+                    `${info[1].meets}`,
+                  ])
+                );
+              })
                 ? "success"
                 : ""
             }

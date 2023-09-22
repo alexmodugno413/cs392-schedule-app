@@ -1,20 +1,15 @@
 import "./ChosenCourses.css";
 
 const ChosenCourses = ({ selectedClasses, allClasses }) => {
-  const findCourse = (courseTitle) => {
-    const course = Object.entries(allClasses).filter(
-      ([id, info]) => `${info.term} CS ${info.number}` === courseTitle
-    );
-    return course;
-  };
-
-  const formattedSelectedClasses = selectedClasses.map(findCourse);
-
   let formattedClasses = [];
-  formattedSelectedClasses.map((id) => {
-    formattedClasses.push(id[0][1]);
+  selectedClasses.map(([term, title, number, meets]) => {
+    formattedClasses.push({
+      term: term,
+      title: title,
+      number: number,
+      meets: meets,
+    });
   });
-  console.log("formattedClasses", formattedClasses);
 
   return (
     <div>
@@ -27,8 +22,8 @@ const ChosenCourses = ({ selectedClasses, allClasses }) => {
         <div>
           <h2>Selected classes:</h2>
           <div>
-            {formattedClasses.map((course, index) => (
-              <div key={index} className={`class-info class-${index + 1}`}>
+            {formattedClasses.map((course) => (
+              <div key={course} className={`class-info`}>
                 <div className="class-term">{course.term}</div>
                 <div className="class-details">
                   <span className="class-number">CS {course.number}:</span>
