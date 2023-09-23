@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.css";
 import "./CourseList.css";
+import { findOverlapCourses } from "../utilities/timeConflictsFunctions.js";
 
 const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
-  const selectClass = (classTitle) => {
-    // LOGIC FOR CATCHING TIME CONFLICTS, ADD FUNCTION FOR DAY AND TIME OVERLAP
+  const formattedCourses = Object.entries(courses).map(([id, info]) => ({
+    term: `${info.term}`,
+    title: `${info.title}`,
+    number: `${info.number}`,
+    meets: `${info.meets}`,
+  }));
+  const overlapCourses = findOverlapCourses(formattedCourses, selectedClasses);
 
+  const selectClass = (classTitle) => {
     var isPresent = selectedClasses.some((selectedClass) => {
       return JSON.stringify(selectedClass) === JSON.stringify(classTitle);
     });
     // if class not already selected, select
     if (!isPresent) {
-      // logic for time conflicts
       setSelectedClasses([...selectedClasses, classTitle]);
     } else {
       setSelectedClasses(
@@ -25,6 +31,7 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
   const newCourses = Object.entries(courses).filter(
     ([id, info]) => info.term === term
   );
+
   return (
     <div className="course-list">
       {Object.entries(newCourses).map(([id, info]) => (
@@ -60,6 +67,18 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
                 );
               })
                 ? "success"
+                : overlapCourses.some((overlapCourse) => {
+                    return (
+                      JSON.stringify(overlapCourse) ===
+                      JSON.stringify({
+                        term: `${info[1].term}`,
+                        title: `${info[1].title}`,
+                        number: `${info[1].number}`,
+                        meets: `${info[1].meets}`,
+                      })
+                    );
+                  })
+                ? "danger"
                 : ""
             }
           >
