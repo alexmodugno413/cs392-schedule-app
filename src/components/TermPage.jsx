@@ -67,10 +67,7 @@ const TermPage = ({ courseData }) => {
           </label>
         </div>
         <Modal open={open} close={closeModal}>
-          <ChosenCourses
-            selectedClasses={selectedClasses}
-            allClasses={courseData}
-          />
+          <ChosenCourses selectedClasses={selectedClasses} />
         </Modal>
         <br /> <br />
         <div className="instructions">

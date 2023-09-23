@@ -1,16 +1,6 @@
 import "./ChosenCourses.css";
 
-const ChosenCourses = ({ selectedClasses, allClasses }) => {
-  let formattedClasses = [];
-  selectedClasses.map(([term, title, number, meets]) => {
-    formattedClasses.push({
-      term: term,
-      title: title,
-      number: number,
-      meets: meets,
-    });
-  });
-
+const ChosenCourses = ({ selectedClasses }) => {
   return (
     <div>
       {selectedClasses.length === 0 ? (
@@ -22,7 +12,7 @@ const ChosenCourses = ({ selectedClasses, allClasses }) => {
         <div>
           <h2>Selected classes:</h2>
           <div>
-            {formattedClasses.map((course) => (
+            {selectedClasses.map((course) => (
               <div key={course} className={`class-info`}>
                 <div className="class-term">{course.term}</div>
                 <div className="class-details">

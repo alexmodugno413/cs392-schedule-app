@@ -6,7 +6,6 @@ import "./CourseList.css";
 const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
   const selectClass = (classTitle) => {
     // LOGIC FOR CATCHING TIME CONFLICTS, ADD FUNCTION FOR DAY AND TIME OVERLAP
-    console.log("classTitle", classTitle);
 
     var isPresent = selectedClasses.some((selectedClass) => {
       return JSON.stringify(selectedClass) === JSON.stringify(classTitle);
@@ -22,7 +21,6 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
         })
       );
     }
-    console.log("selectedClasses", selectedClasses);
   };
   const newCourses = Object.entries(courses).filter(
     ([id, info]) => info.term === term
@@ -32,19 +30,19 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
       {Object.entries(newCourses).map(([id, info]) => (
         <div
           onClick={() =>
-            selectClass([
-              `${info[1].term}`,
-              `${info[1].title}`,
-              `${info[1].number}`,
-              `${info[1].meets}`,
-            ])
+            selectClass({
+              term: `${info[1].term}`,
+              title: `${info[1].title}`,
+              number: `${info[1].number}`,
+              meets: `${info[1].meets}`,
+            })
           }
-          key={[
-            `${info[1].term}`,
-            `${info[1].title}`,
-            `${info[1].number}`,
-            `${info[1].meets}`,
-          ]}
+          key={{
+            term: `${info[1].term}`,
+            title: `${info[1].title}`,
+            number: `${info[1].number}`,
+            meets: `${info[1].meets}`,
+          }}
         >
           <Card
             className="left-aligned-card"
@@ -53,12 +51,12 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
               selectedClasses.some((selectedClass) => {
                 return (
                   JSON.stringify(selectedClass) ===
-                  JSON.stringify([
-                    `${info[1].term}`,
-                    `${info[1].title}`,
-                    `${info[1].number}`,
-                    `${info[1].meets}`,
-                  ])
+                  JSON.stringify({
+                    term: `${info[1].term}`,
+                    title: `${info[1].title}`,
+                    number: `${info[1].number}`,
+                    meets: `${info[1].meets}`,
+                  })
                 );
               })
                 ? "success"
