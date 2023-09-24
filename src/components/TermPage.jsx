@@ -43,10 +43,8 @@ const TermSelector = ({ termSelection, setTermSelection }) => (
   </div>
 );
 
-const TermPage = ({ courseData }) => {
+const TermPage = ({ courseData, selectedClasses, setSelectedClasses }) => {
   const [termSelection, setTermSelection] = useState(terms[0]);
-  const [selectedClasses, setSelectedClasses] = useState([]);
-  const [popUp, setPopUp] = useState(false);
 
   const [open, setOpen] = useState(false);
 

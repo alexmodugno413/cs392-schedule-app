@@ -3,9 +3,12 @@ import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.css";
 import "./CourseList.css";
 import { findOverlapCourses } from "../utilities/timeConflictsFunctions.js";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
   const formattedCourses = Object.entries(courses).map(([id, info]) => ({
+    id: `${info.term}|${info.title}|${info.number}|${info.meets}`,
     term: `${info.term}`,
     title: `${info.title}`,
     number: `${info.number}`,
@@ -28,27 +31,25 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
       );
     }
   };
-  const newCourses = Object.entries(courses).filter(
-    ([id, info]) => info.term === term
-  );
+  const newCourses = formattedCourses.filter((course) => course.term === term);
 
   return (
     <div className="course-list">
-      {Object.entries(newCourses).map(([id, info]) => (
+      {newCourses.map((course) => (
         <div
           onClick={() =>
             selectClass({
-              term: `${info[1].term}`,
-              title: `${info[1].title}`,
-              number: `${info[1].number}`,
-              meets: `${info[1].meets}`,
+              term: `${course.term}`,
+              title: `${course.title}`,
+              number: `${course.number}`,
+              meets: `${course.meets}`,
             })
           }
           key={{
-            term: `${info[1].term}`,
-            title: `${info[1].title}`,
-            number: `${info[1].number}`,
-            meets: `${info[1].meets}`,
+            term: `${course.term}`,
+            title: `${course.title}`,
+            number: `${course.number}`,
+            meets: `${course.meets}`,
           }}
         >
           <Card
@@ -59,10 +60,10 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
                 return (
                   JSON.stringify(selectedClass) ===
                   JSON.stringify({
-                    term: `${info[1].term}`,
-                    title: `${info[1].title}`,
-                    number: `${info[1].number}`,
-                    meets: `${info[1].meets}`,
+                    term: `${course.term}`,
+                    title: `${course.title}`,
+                    number: `${course.number}`,
+                    meets: `${course.meets}`,
                   })
                 );
               })
@@ -71,10 +72,11 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
                     return (
                       JSON.stringify(overlapCourse) ===
                       JSON.stringify({
-                        term: `${info[1].term}`,
-                        title: `${info[1].title}`,
-                        number: `${info[1].number}`,
-                        meets: `${info[1].meets}`,
+                        id: `${course.id}`,
+                        term: `${course.term}`,
+                        title: `${course.title}`,
+                        number: `${course.number}`,
+                        meets: `${course.meets}`,
                       })
                     );
                   })
@@ -84,16 +86,19 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
           >
             <Card.Body className="card-content">
               <Card.Title style={{ textAlign: "left", marginLeft: 10 }}>
-                {info[1].term} CS {info[1].number}
+                {course.term} CS {course.number}
               </Card.Title>
               <Card.Text style={{ textAlign: "left", marginLeft: 10 }}>
-                {info[1].title}
+                {course.title}
               </Card.Text>
               <div className="bottom-text">
                 <hr />
                 <Card.Text style={{ textAlign: "left", marginLeft: 10 }}>
-                  {info[1].meets}
+                  {course.meets}
                 </Card.Text>
+                <Link to={`/courses/${course.id}`}>
+                  <Button variant="secondary">Edit Course</Button>
+                </Link>
               </div>
             </Card.Body>
           </Card>
