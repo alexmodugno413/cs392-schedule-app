@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-const Form = ({ selectedClasses }) => {
+const Form = () => {
   const { courseId } = useParams();
   const [term, title, number, meets] = courseId.split("|");
   const navigate = useNavigate();
