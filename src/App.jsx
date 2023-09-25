@@ -26,10 +26,6 @@ const Main = () => {
   if (!data) return <h1>No user data found</h1>;
 
   return (
-    // <div>
-    //   <Banner title={data.title} />
-    //   <TermPage courseData={data.courses} />
-    // </div>
     <BrowserRouter>
       <Routes>
         <Route
@@ -66,10 +62,6 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <Main />
-        {/* <div>
-          <Banner title={data.title} />
-          <TermPage courseData={data.courses} />
-        </div> */}
       </div>
     </QueryClientProvider>
   );

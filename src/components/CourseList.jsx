@@ -20,6 +20,12 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
     var isPresent = selectedClasses.some((selectedClass) => {
       return JSON.stringify(selectedClass) === JSON.stringify(classTitle);
     });
+    var isOverlap = overlapCourses.some((overlapCourse) => {
+      return JSON.stringify(overlapCourse) === JSON.stringify(classTitle);
+    });
+    if (isOverlap) {
+      return;
+    }
     // if class not already selected, select
     if (!isPresent) {
       setSelectedClasses([...selectedClasses, classTitle]);
@@ -39,6 +45,7 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
         <div
           onClick={() =>
             selectClass({
+              id: `${course.term}|${course.title}|${course.number}|${course.meets}`,
               term: `${course.term}`,
               title: `${course.title}`,
               number: `${course.number}`,
@@ -60,6 +67,7 @@ const CourseList = ({ courses, term, selectedClasses, setSelectedClasses }) => {
                 return (
                   JSON.stringify(selectedClass) ===
                   JSON.stringify({
+                    id: `${course.id}`,
                     term: `${course.term}`,
                     title: `${course.title}`,
                     number: `${course.number}`,
