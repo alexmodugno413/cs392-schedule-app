@@ -1,0 +1,23 @@
+.banner {
+    display: flex;
+    align-items: center;
+}
+
+.title-container {
+    flex-grow: 1; 
+    text-align: center; 
+    margin-left: 100px; 
+  }
+
+.login-button {
+margin-top: 15px;
+margin-right: 20px;
+}
+
+.sign-in-button {
+    transition: background-color 0.3s; /* Smooth transition effect */
+  }
+  
+  .sign-in-button:hover {
+    background-color: #007bff; /* Change to the desired color on hover */
+  }

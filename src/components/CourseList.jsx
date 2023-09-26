@@ -4,6 +4,7 @@ import "./CourseList.css";
 import { findOverlapCourses } from "../utilities/timeConflictsFunctions.js";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { useAuthState } from "../utilities/firebase";
 
 const CourseList = ({
   courses,
@@ -12,6 +13,8 @@ const CourseList = ({
   selectedClasses,
   setSelectedClasses,
 }) => {
+  const [user] = useAuthState();
+
   const formattedCourses = Object.entries(courses).map(([id, info]) => ({
     id: `${info.term}|${info.title}|${info.number}|${info.meets}`,
     validId: id,
@@ -97,11 +100,15 @@ const CourseList = ({
                 </Card.Text>
               </div>
             </Card.Body>
-            <Link to={`/courses/${course.id}`}>
-              <Button id="edit-button" variant="secondary">
-                Edit Course
-              </Button>
-            </Link>
+            {user ? (
+              <Link to={`/courses/${course.id}`}>
+                <Button id="edit-button" variant="secondary">
+                  Edit Course
+                </Button>
+              </Link>
+            ) : (
+              ""
+            )}
           </Card>
         </div>
       ))}
