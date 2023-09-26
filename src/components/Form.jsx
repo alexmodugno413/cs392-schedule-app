@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDbUpdate } from "../utilities/firebase";
 
-const Form = () => {
+const Form = ({ setTerm }) => {
   const { courseId } = useParams();
   const [term, title, number, meets] = courseId.split("|");
   const navigate = useNavigate();
@@ -12,6 +13,9 @@ const Form = () => {
     meetingTime: meets,
     title: title,
   });
+
+  const databaseId = `${term[0]}${number}`;
+  const [update, result] = useDbUpdate(`/courses/${databaseId}`);
 
   const [errors, setErrors] = useState({});
 
@@ -27,22 +31,6 @@ const Form = () => {
     const newErrors = { ...errors };
 
     switch (name) {
-      case "term":
-        // Make sure term is "Fall", "Winter", or "Spring"
-        if (!/^(Fall|Winter|Spring)$/.test(value)) {
-          newErrors.term = "Term must be 'Fall', 'Winter', or 'Spring'";
-        } else {
-          delete newErrors.term;
-        }
-        break;
-      case "number":
-        // Make sure number is a number
-        if (!/^\d+$/.test(value)) {
-          newErrors.number = "Number must be a valid number";
-        } else {
-          delete newErrors.number;
-        }
-        break;
       case "meetingTime":
         // Make sure number matches format like "MWF 9:00-9:50" or "TuTh 14:00-15:20" or "MW 9:00-9:50"
         if (!/^(MWF|TuTh|MW) \d{1,2}:\d{2}-\d{1,2}:\d{2}$/.test(value)) {
@@ -74,11 +62,20 @@ const Form = () => {
     if (Object.keys(errors).length != 0) {
       return;
     }
+
+    update({
+      meets: formData.meetingTime,
+      number: formData.number,
+      term: formData.term,
+      title: formData.title,
+    });
+
+    setTerm(term);
+    navigate("/");
   };
 
   // Cancel button
   const handleCancel = () => {
-    navigate("/");
     // Reset form data
     setFormData({
       term: "",
@@ -87,38 +84,16 @@ const Form = () => {
       title: "",
     });
     setErrors({});
+    setTerm(term);
+    navigate("/");
   };
 
   return (
     <div className="container">
-      <h2>Edit Course Information</h2>
+      <h2>
+        Edit Course Information for {term} CS {number}
+      </h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="term">Term</label>
-          <input
-            type="text"
-            className={`form-control ${errors.term ? "is-invalid" : ""}`}
-            id="term"
-            name="term"
-            value={formData.term}
-            onChange={handleInputChange}
-          />
-          {errors.term && <div className="invalid-feedback">{errors.term}</div>}
-        </div>
-        <div className="form-group">
-          <label htmlFor="number">Number</label>
-          <input
-            type="text"
-            className={`form-control ${errors.number ? "is-invalid" : ""}`}
-            id="number"
-            name="number"
-            value={formData.number}
-            onChange={handleInputChange}
-          />
-          {errors.number && (
-            <div className="invalid-feedback">{errors.number}</div>
-          )}
-        </div>
         <div className="form-group">
           <label htmlFor="meetingTime">Meeting Time</label>
           <input

@@ -36,7 +36,7 @@ function hasTimeOverlap(time1, time2, term1, term2) {
   
 // Remove courses from overlapCourses that are also in selectedCourses
   const filteredOverlapCourses = overlapCourses.filter(course1 =>
-    !selectedCourses.some(course2 => course1.term === course2.term && course1.title === course2.title && course1.number === course2.number && course1.meets === course2.meets)
+    !selectedCourses.some(course2 => course1.validId === course2.validId)
   );
   
     return filteredOverlapCourses;

@@ -43,8 +43,14 @@ const TermSelector = ({ termSelection, setTermSelection }) => (
   </div>
 );
 
-const TermPage = ({ courseData, selectedClasses, setSelectedClasses }) => {
-  const [termSelection, setTermSelection] = useState(terms[0]);
+const TermPage = ({
+  courseData,
+  selectedClasses,
+  setSelectedClasses,
+  termSelection,
+  setTermSelection,
+}) => {
+  //   const [termSelection, setTermSelection] = useState(terms[0]);
 
   const [open, setOpen] = useState(false);
 
@@ -74,6 +80,7 @@ const TermPage = ({ courseData, selectedClasses, setSelectedClasses }) => {
         <CourseList
           courses={courseData}
           term={termSelection}
+          setTerm={setTermSelection}
           selectedClasses={selectedClasses}
           setSelectedClasses={setSelectedClasses}
         />

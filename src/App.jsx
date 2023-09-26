@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 const Main = () => {
   const [data, error] = useDbData("/");
   const [selectedClasses, setSelectedClasses] = useState([]);
+  const [termSelection, setTermSelection] = useState("Fall");
 
   if (error) return <h1>Error loading user data: {`${error}`}</h1>;
   if (!data) return <h1>No user data found</h1>;
@@ -35,13 +36,15 @@ const Main = () => {
                 courseData={data.courses}
                 selectedClasses={selectedClasses}
                 setSelectedClasses={setSelectedClasses}
+                termSelection={termSelection}
+                setTermSelection={setTermSelection}
               />
             }
           />
         </Route>
         <Route
           path="courses/:courseId"
-          element={<Form selectedClasses={selectedClasses} />}
+          element={<Form setTerm={setTermSelection} />}
         />
       </Routes>
     </BrowserRouter>
