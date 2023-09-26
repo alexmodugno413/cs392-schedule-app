@@ -4,6 +4,7 @@ import "./CourseList.css";
 import { findOverlapCourses } from "../utilities/timeConflictsFunctions.js";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { useProfile } from "../utilities/profile";
 import { useAuthState } from "../utilities/firebase";
 
 const CourseList = ({
@@ -13,7 +14,7 @@ const CourseList = ({
   selectedClasses,
   setSelectedClasses,
 }) => {
-  const [user] = useAuthState();
+  const [profile, profileLoading, profileError] = useProfile();
 
   const formattedCourses = Object.entries(courses).map(([id, info]) => ({
     id: `${info.term}|${info.title}|${info.number}|${info.meets}`,
@@ -100,7 +101,7 @@ const CourseList = ({
                 </Card.Text>
               </div>
             </Card.Body>
-            {user ? (
+            {profile.isAdmin ? (
               <Link to={`/courses/${course.id}`}>
                 <Button id="edit-button" variant="secondary">
                   Edit Course

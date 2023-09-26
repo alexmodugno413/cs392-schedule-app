@@ -18,6 +18,6 @@ margin-right: 20px;
     transition: background-color 0.3s; /* Smooth transition effect */
   }
   
-  .sign-in-button:hover {
-    background-color: #007bff; /* Change to the desired color on hover */
-  }
+.sign-in-button:hover {
+background-color: #007bff; /* Change to the desired color on hover */
+}
