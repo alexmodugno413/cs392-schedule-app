@@ -25,7 +25,6 @@ const analytics = getAnalytics(firebase);
 const database = getDatabase(firebase);
 const auth = getAuth(firebase);
 
-// if (process.env.REACT_APP_EMULATE) {
 if (import.meta.env.MODE != "production") {
   console.log("import.meta.env", import.meta.env);
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
