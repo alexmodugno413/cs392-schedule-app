@@ -87,6 +87,7 @@ const CourseList = ({
                   meets: `${course.meets}`,
                 })
               }
+              data-cy="course"
             >
               <Card.Title style={{ textAlign: "left", marginLeft: 10 }}>
                 {course.term} CS {course.number}
