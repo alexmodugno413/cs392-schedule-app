@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 
 const Main = () => {
   const [data, error] = useDbData("/");
+  console.log("data", data);
   const [selectedClasses, setSelectedClasses] = useState([]);
   const [termSelection, setTermSelection] = useState("Fall");
 
