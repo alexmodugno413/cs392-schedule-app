@@ -26,7 +26,6 @@ const database = getDatabase(firebase);
 const auth = getAuth(firebase);
 
 if (import.meta.env.MODE != "production") {
-  console.log("import.meta.env", import.meta.env);
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
   connectDatabaseEmulator(database, "127.0.0.1", 9000);
 
@@ -36,7 +35,6 @@ if (import.meta.env.MODE != "production") {
 }
 
 export const useDbData = (path) => {
-    console.log("import.meta.env", import.meta.env);
     const [data, setData] = useState();
     const [error, setError] = useState(null);
 
