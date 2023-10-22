@@ -24,6 +24,7 @@ const TermButton = ({ term, termSelection, setTermSelection }) => (
       }
       htmlFor={term}
       style={{ width: "80px" }}
+      data-cy={term}
     >
       {term}
     </label>
